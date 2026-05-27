@@ -105,7 +105,7 @@ def login():
     return render_template('login.html')
 
 # Dashboard
-#s
+
 @app.route('/dashboard')
 def dashboard():
 
