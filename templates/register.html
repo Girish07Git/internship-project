@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Registration</title>
+    <title>Student Registration | Pure CSS Dark Mode</title>
     <style>
         * {
             margin: 0;
@@ -11,24 +11,132 @@
             box-sizing: border-box;
         }
 
-        body {
+        /* Light mode (default) */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-bg: white;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --label-color: #475569;
+            --input-border: #e2e8f0;
+            --input-bg: white;
+            --input-text: #0f172a;
+            --error-bg: #fef2f2;
+            --error-border: #ef4444;
+            --valid-bg: #f0fdf4;
+            --valid-border: #10b981;
+            --hint-color: #94a3b8;
+            --strength-bg: #e2e8f0;
+            --footer-color: #94a3b8;
+            --link-color: #667eea;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            --btn-gradient: linear-gradient(100deg, #667eea, #764ba2);
+        }
+
+        /* Dark mode - triggered by checkbox */
+        #darkmode:checked ~ .dark-mode-wrapper {
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            --card-bg: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --label-color: #cbd5e1;
+            --input-border: #334155;
+            --input-bg: #0f172a;
+            --input-text: #f1f5f9;
+            --error-bg: #2c0f17;
+            --error-border: #f43f5e;
+            --valid-bg: #0a1f1c;
+            --valid-border: #10b981;
+            --hint-color: #64748b;
+            --strength-bg: #334155;
+            --footer-color: #64748b;
+            --link-color: #818cf8;
+            --shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --btn-gradient: linear-gradient(100deg, #4f46e5, #7c3aed);
+        }
+
+        /* Hide checkbox */
+        #darkmode {
+            display: none;
+        }
+
+        /* Toggle button style */
+        .dark-toggle-label {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--input-border);
+            border-radius: 50px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .dark-toggle-label:hover {
+            transform: scale(1.05);
+        }
+
+        /* Icon changes based on mode */
+        .dark-toggle-label .light-icon {
+            display: inline-block;
+        }
+        .dark-toggle-label .dark-icon {
+            display: none;
+        }
+
+        #darkmode:checked ~ .dark-mode-wrapper .dark-toggle-label .light-icon {
+            display: none;
+        }
+        #darkmode:checked ~ .dark-mode-wrapper .dark-toggle-label .dark-icon {
+            display: inline-block;
+        }
+
+        /* Change toggle text */
+        .toggle-text-light {
+            display: inline;
+        }
+        .toggle-text-dark {
+            display: none;
+        }
+
+        #darkmode:checked ~ .dark-mode-wrapper .dark-toggle-label .toggle-text-light {
+            display: none;
+        }
+        #darkmode:checked ~ .dark-mode-wrapper .dark-toggle-label .toggle-text-dark {
+            display: inline;
+        }
+
+        /* Main wrapper that gets dark mode styles */
+        .dark-mode-wrapper {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--bg-gradient);
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             padding: 20px;
+            transition: all 0.3s ease;
         }
 
         .card {
-            background: white;
+            background: var(--card-bg);
             border-radius: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow);
             width: 100%;
             max-width: 440px;
             padding: 2rem 2rem 2.2rem;
             animation: slideUp 0.5s ease-out;
+            transition: all 0.3s ease;
         }
 
         @keyframes slideUp {
@@ -44,16 +152,18 @@
 
         h2 {
             font-size: 28px;
-            color: #1e293b;
+            color: var(--text-primary);
             margin-bottom: 6px;
             animation: fadeIn 0.6s ease;
+            transition: color 0.3s ease;
         }
 
         .sub {
-            color: #64748b;
+            color: var(--text-secondary);
             font-size: 14px;
             margin-bottom: 28px;
             animation: fadeIn 0.7s ease;
+            transition: color 0.3s ease;
         }
 
         @keyframes fadeIn {
@@ -88,8 +198,9 @@
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
-            color: #475569;
+            color: var(--label-color);
             margin-bottom: 8px;
+            transition: color 0.3s ease;
         }
 
         .input-wrap {
@@ -100,13 +211,13 @@
             width: 100%;
             padding: 12px 15px;
             font-size: 15px;
-            border: 2px solid #e2e8f0;
+            border: 2px solid var(--input-border);
             border-radius: 18px;
-            background: white;
+            background: var(--input-bg);
             font-family: inherit;
             transition: all 0.25s ease;
             outline: none;
-            color: #0f172a;
+            color: var(--input-text);
         }
 
         select {
@@ -118,6 +229,10 @@
             padding-right: 40px;
         }
 
+        #darkmode:checked ~ .dark-mode-wrapper select {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        }
+
         input:focus, select:focus {
             border-color: #667eea;
             box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
@@ -125,19 +240,19 @@
         }
 
         input:valid:not(:placeholder-shown) {
-            border-color: #10b981;
-            background-color: #f0fdf4;
+            border-color: var(--valid-border);
+            background-color: var(--valid-bg);
         }
 
         input:invalid:not(:placeholder-shown) {
-            border-color: #ef4444;
-            background-color: #fef2f2;
+            border-color: var(--error-border);
+            background-color: var(--error-bg);
             animation: shake 0.4s ease;
         }
 
         select:valid {
-            border-color: #10b981;
-            background-color: #f0fdf4;
+            border-color: var(--valid-border);
+            background-color: var(--valid-bg);
         }
 
         @keyframes shake {
@@ -215,9 +330,10 @@
 
         .hint {
             font-size: 11px;
-            color: #94a3b8;
+            color: var(--hint-color);
             margin-top: 6px;
             margin-left: 8px;
+            transition: color 0.3s ease;
         }
 
         .strength-box {
@@ -226,7 +342,7 @@
 
         .strength-bar {
             height: 5px;
-            background: #e2e8f0;
+            background: var(--strength-bg);
             border-radius: 4px;
             overflow: hidden;
         }
@@ -251,15 +367,16 @@
         .strength-text {
             font-size: 10px;
             margin-top: 5px;
-            color: #475569;
+            color: var(--text-secondary);
             display: flex;
             align-items: center;
             gap: 5px;
+            transition: color 0.3s ease;
         }
 
         button {
             width: 100%;
-            background: linear-gradient(100deg, #667eea, #764ba2);
+            background: var(--btn-gradient);
             border: none;
             padding: 14px;
             font-weight: 700;
@@ -285,102 +402,104 @@
             text-align: center;
             margin-top: 18px;
             font-size: 11px;
-            color: #94a3b8;
+            color: var(--footer-color);
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a {
+            color: var(--link-color);
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-text a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
-<div class="card">
-    <h2> Create account</h2>
 
-    <form action="#" method="POST">
-        <div class="group">
-            <label>👤 Username</label>
-            <div class="input-wrap">
-                <input type="text"
-       name="full_name"
-       placeholder="Enter username"
-       required>
+<input type="checkbox" id="darkmode">
+
+<div class="dark-mode-wrapper">
+    <label for="darkmode" class="dark-toggle-label">
+        <span class="light-icon">🌙</span>
+        <span class="dark-icon">☀️</span>
+        <span class="toggle-text-light">Dark Mode</span>
+        <span class="toggle-text-dark">Light Mode</span>
+    </label>
+
+    <div class="card">
+        <h2>✨ Create account</h2>
+        <div class="sub">Join us — it's free & easy</div>
+
+        <form action="#" method="POST">
+            <div class="group">
+                <label>👤 Username</label>
+                <div class="input-wrap">
+                    <input type="text"
+                           name="full_name"
+                           placeholder="Enter username"
+                           pattern="[A-Za-z\\s]{3,}"
+                           title="Minimum 3 letters"
+                           required>
+                </div>
+                <div class="error-msg">❌ Name must be at least 3 letters</div>
+                <div class="hint">✅ Example: Rohan Sharma</div>
             </div>
-            <div class="error-msg">❌ Name must be at least 3 letters</div>
-            
+
+            <div class="group">
+                <label>✉️ Email</label>
+                <div class="input-wrap">
+                    <input type="email" name="email" placeholder="hello@example.com"
+                           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                           title="Valid email required" required>
+                </div>
+                <div class="error-msg">📧 Enter a valid email address</div>
+                <div class="hint">✅ like name@domain.com</div>
+            </div>
+
+            <div class="group">
+                <label>🔒 Password</label>
+                <div class="input-wrap">
+                    <input type="password" name="password" placeholder="••••••"
+                           pattern=".{6,}" title="Minimum 6 characters" required>
+                </div>
+                <div class="error-msg">❌ Password needs at least 6 characters</div>
+                <div class="strength-box">
+                    <div class="strength-bar">
+                        <div class="strength-fill"></div>
+                    </div>
+                    <div class="strength-text">
+                        <span>⚡</span> <span>min 6 chars = strong</span>
+                    </div>
+                </div>
+                <div class="hint">🔐 Use 6+ characters (letters/numbers)</div>
+            </div>
+
+            <div class="group">
+                <label>🎭 Role</label>
+                <div class="input-wrap">
+                    <select name="role" required>
+                        <option value="" disabled selected>— Select role —</option>
+                        <option value="admin">Admin</option>
+                        <option value="user">User</option>
+                    </select>
+                </div>
+                <div class="error-msg">🌟 Please choose a role</div>
+                <div class="hint">✅ Pick Admin or User</div>
+            </div>
+
+            <button type="submit">✨ Register Now →</button>
+        </form>
+
+        <div class="footer-text">
+            Already have account?
+            <a href="/login">Login</a>
         </div>
-
-        <div class="group">
-            <label>✉️ Email</label>
-            <div class="input-wrap">
-                <input type="email" name="email" placeholder="hello@example.com"
-                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                       title="Valid email required" required>
-            </div>
-            <div class="error-msg">📧 Enter a valid email address</div>
-          
-        </div>
-
-        <div class="group">
-            <label>🔒 Password</label>
-            <div class="input-wrap">
-                <input type="password" name="password" placeholder="••••••"
-                       pattern=".{6,}" title="Minimum 6 characters" required>
-            </div>
-            <div class="error-msg">❌ Password needs at least 6 characters</div>
-           <div class="strength-box">
-    <div class="strength-bar">
-        <div class="strength-fill"></div>
     </div>
 </div>
-</div>
 
-<div class="group">
-    <label>🎭 Role</label>
-
-    <div class="input-wrap">
-
-        <select name="role" required>
-
-            <option value="" disabled selected>
-                — Select role —
-            </option>
-
-            <option value="admin">
-                Admin
-            </option>
-
-            <option value="user">
-                User
-            </option>
-
-        </select>
-
-    </div>
-
-    <div class="error-msg">
-        🌟 Please choose a role
-    </div>
-
-</div>
-
-<button type="submit">
-    Register Now →
-</button>
-
-</form>
-
-<div class="footer-text">
-
-    Already have account?
-
-    <a href="/login"
-       style="color:#667eea;
-              font-weight:bold;
-              text-decoration:none;">
-
-        Login
-
-    </a>
-
-</div>
-
-</div>
 </body>
 </html>
