@@ -1,17 +1,29 @@
 from flask import Flask, render_template, request, redirect, session
 from flask_bcrypt import Bcrypt
-import pymysql
+import sqlite3
 
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
 app.secret_key = "secretkey"
-connection = pymysql.connect(
-    host='localhost',
-    user='root',
-    password='1234',
-    database='user_auth_db'
+# SQLite Database
+connection = sqlite3.connect(
+    'users.db',
+    check_same_thread=False
 )
+cursor = connection.cursor()
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS users(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    full_name TEXT,
+    email TEXT UNIQUE,
+    password_hash TEXT,
+    role TEXT
+)
+""")
+
+connection.commit()
 @app.route('/')
 def home():
     return redirect('/register')
@@ -36,8 +48,7 @@ def register():
         cursor = connection.cursor()
 
         # Check duplicate email
-        check_sql = "SELECT * FROM users WHERE email=%s"
-
+       check_sql = "SELECT * FROM users WHERE email=?"
         cursor.execute(check_sql, (email,))
 
         existing_user = cursor.fetchone()
@@ -48,7 +59,7 @@ def register():
 
         sql = """
         INSERT INTO users(full_name,email,password_hash,role)
-        VALUES(%s,%s,%s,%s)
+        VALUES(?,?,?,?)
         """
 
         cursor.execute(sql, (full_name, email, password, role))
@@ -71,7 +82,7 @@ def login():
 
         cursor = connection.cursor()
 
-        sql = "SELECT * FROM users WHERE email=%s"
+        sql = "SELECT * FROM users WHERE email=?"
 
         cursor.execute(sql, (email,))
 
@@ -117,10 +128,10 @@ def forgot_password():
         cursor = connection.cursor()
 
         sql = """
-        UPDATE users
-        SET password_hash=%s
-        WHERE email=%s
-        """
+UPDATE users
+SET password_hash=?
+WHERE email=?
+"""
 
         cursor.execute(sql, (password, email))
 
