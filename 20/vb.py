@@ -3,6 +3,7 @@ import sqlite3
 
 app = Flask(__name__)
 
+
 # Create Database
 conn = sqlite3.connect("users.db")
 
@@ -23,17 +24,94 @@ conn.close()
 def home():
 
     return '''
-    <h1 style="text-align:center;">Welcome</h1>
+    <html>
 
-    <div style="text-align:center; margin-top:50px;">
+    <head>
 
-        <a href="/register">Register</a>
+        <title>Home Page</title>
 
-        <br><br>
+        <style>
 
-        <a href="/login">Login</a>
+            *{
+                margin:0;
+                padding:0;
+                box-sizing:border-box;
+            }
 
-    </div>
+            body{
+                height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                font-family:Arial;
+                background:linear-gradient(135deg,#74ebd5,#ACB6E5);
+                overflow:hidden;
+            }
+
+            .box{
+                background:white;
+                padding:50px;
+                border-radius:20px;
+                text-align:center;
+                box-shadow:0px 0px 20px rgba(0,0,0,0.3);
+                animation:zoom 1s ease;
+            }
+
+            h1{
+                margin-bottom:30px;
+                color:#333;
+            }
+
+            a{
+                text-decoration:none;
+                background:#007bff;
+                color:white;
+                padding:12px 25px;
+                border-radius:8px;
+                display:inline-block;
+                transition:0.4s;
+            }
+
+            a:hover{
+                background:#0056b3;
+                transform:scale(1.1);
+            }
+
+            @keyframes zoom{
+
+                from{
+                    transform:scale(0);
+                    opacity:0;
+                }
+
+                to{
+                    transform:scale(1);
+                    opacity:1;
+                }
+
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="box">
+
+            <h1>Welcome</h1>
+
+            <a href="/register">Register</a>
+
+            <br><br><br>
+
+            <a href="/login">Login</a>
+
+        </div>
+
+    </body>
+
+    </html>
     '''
 
 
@@ -60,36 +138,111 @@ def register():
         return redirect('/login')
 
     return '''
+    <html>
 
-    <h1>Register</h1>
+    <head>
 
-    <form method="POST">
+        <title>Register</title>
 
-        <input type="text"
-        name="name"
-        placeholder="Enter Name"
-        required>
+        <style>
 
-        <br><br>
+            body{
+                height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+                font-family:Arial;
+            }
 
-        <input type="email"
-        name="email"
-        placeholder="Enter Email"
-        required>
+            .box{
+                background:white;
+                padding:40px;
+                border-radius:20px;
+                width:350px;
+                text-align:center;
+                box-shadow:0px 0px 20px rgba(0,0,0,0.3);
+                animation:slide 1s ease;
+            }
 
-        <br><br>
+            h2{
+                margin-bottom:20px;
+            }
 
-        <input type="password"
-        name="password"
-        placeholder="Enter Password"
-        required>
+            input{
+                width:100%;
+                padding:12px;
+                margin:10px 0;
+                border:1px solid gray;
+                border-radius:8px;
+                outline:none;
+            }
 
-        <br><br>
+            .btn{
+                background:green;
+                color:white;
+                border:none;
+                cursor:pointer;
+                transition:0.4s;
+            }
 
-        <input type="submit"
-        value="Register">
+            .btn:hover{
+                background:darkgreen;
+                transform:scale(1.05);
+            }
 
-    </form>
+            @keyframes slide{
+
+                from{
+                    transform:translateY(-100px);
+                    opacity:0;
+                }
+
+                to{
+                    transform:translateY(0);
+                    opacity:1;
+                }
+
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="box">
+
+            <h2>Register Form</h2>
+
+            <form method="POST">
+
+                <input type="text"
+                name="name"
+                placeholder="Enter Name"
+                required>
+
+                <input type="email"
+                name="email"
+                placeholder="Enter Email"
+                required>
+
+                <input type="password"
+                name="password"
+                placeholder="Enter Password"
+                required>
+
+                <input type="submit"
+                value="Register"
+                class="btn">
+
+            </form>
+
+        </div>
+
+    </body>
+
+    </html>
     '''
 
 
@@ -116,57 +269,244 @@ def login():
         if user:
 
             return '''
+            <html>
 
-            <h1 style="color:green;">
-            Login Successful
-            </h1>
+            <head>
 
-            <h2>
-            Welcome ''' + name + '''
-            </h2>
+            <style>
 
-            <a href="/logout">Logout</a>
+                body{
+                    height:100vh;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    background:linear-gradient(135deg,#89f7fe,#66a6ff);
+                    font-family:Arial;
+                }
 
+                .success-box{
+                    background:white;
+                    padding:50px;
+                    border-radius:20px;
+                    text-align:center;
+                    box-shadow:0px 0px 20px rgba(0,0,0,0.3);
+                    animation:pop 1s ease;
+                }
+
+                h1{
+                    color:green;
+                    margin-bottom:20px;
+                }
+
+                h2{
+                    color:#333;
+                    margin-bottom:30px;
+                }
+
+                a{
+                    text-decoration:none;
+                    background:red;
+                    color:white;
+                    padding:12px 25px;
+                    border-radius:8px;
+                    transition:0.4s;
+                    display:inline-block;
+                }
+
+                a:hover{
+                    background:darkred;
+                    transform:scale(1.1);
+                }
+
+                @keyframes pop{
+
+                    0%{
+                        transform:scale(0);
+                        opacity:0;
+                    }
+
+                    100%{
+                        transform:scale(1);
+                        opacity:1;
+                    }
+
+                }
+
+            </style>
+
+            </head>
+
+            <body>
+
+                <div class="success-box">
+
+                    <h1>Login Successful</h1>
+
+                    <h2>Welcome ''' + name + '''</h2>
+
+                    <a href="/logout">Logout</a>
+
+                </div>
+
+            </body>
+
+            </html>
             '''
 
         else:
 
             return '''
+            <html>
 
-            <h1 style="color:red;">
-            Wrong Username or Password
-            </h1>
+            <head>
 
+            <style>
+
+                body{
+                    height:100vh;
+                    display:flex;
+                    justify-content:center;
+                    align-items:center;
+                    background:#ffe6e6;
+                    font-family:Arial;
+                }
+
+                .error{
+                    color:red;
+                    font-size:30px;
+                    animation:shake 0.5s;
+                }
+
+                @keyframes shake{
+
+                    0%{transform:translateX(0);}
+                    25%{transform:translateX(-10px);}
+                    50%{transform:translateX(10px);}
+                    75%{transform:translateX(-10px);}
+                    100%{transform:translateX(0);}
+
+                }
+
+            </style>
+
+            </head>
+
+            <body>
+
+                <div class="error">
+                    Wrong Username or Password
+                </div>
+
+            </body>
+
+            </html>
             '''
 
     return '''
+    <html>
 
-    <h1>Login</h1>
+    <head>
 
-    <form method="POST">
+        <title>Login</title>
 
-        <input type="text"
-        name="name"
-        placeholder="Enter Name"
-        required>
+        <style>
 
-        <br><br>
+            body{
+                height:100vh;
+                display:flex;
+                justify-content:center;
+                align-items:center;
+                background:linear-gradient(135deg,#89f7fe,#66a6ff);
+                font-family:Arial;
+            }
 
-        <input type="password"
-        name="password"
-        placeholder="Enter Password"
-        required>
+            .box{
+                background:white;
+                padding:40px;
+                border-radius:20px;
+                width:320px;
+                text-align:center;
+                box-shadow:0px 0px 20px rgba(0,0,0,0.3);
+                animation:slide 1s ease;
+            }
 
-        <br><br>
+            h2{
+                margin-bottom:20px;
+            }
 
-        <input type="submit"
-        value="Login">
+            input{
+                width:100%;
+                padding:12px;
+                margin:10px 0;
+                border:1px solid gray;
+                border-radius:8px;
+                outline:none;
+            }
 
-    </form>
+            .btn{
+                background:#007bff;
+                color:white;
+                border:none;
+                cursor:pointer;
+                transition:0.4s;
+            }
+
+            .btn:hover{
+                background:#0056b3;
+                transform:scale(1.05);
+            }
+
+            @keyframes slide{
+
+                from{
+                    transform:translateY(-100px);
+                    opacity:0;
+                }
+
+                to{
+                    transform:translateY(0);
+                    opacity:1;
+                }
+
+            }
+
+        </style>
+
+    </head>
+
+    <body>
+
+        <div class="box">
+
+            <h2>Login Form</h2>
+
+            <form method="POST">
+
+                <input type="text"
+                name="name"
+                placeholder="Enter Name"
+                required>
+
+                <input type="password"
+                name="password"
+                placeholder="Enter Password"
+                required>
+
+                <input type="submit"
+                value="Login"
+                class="btn">
+
+            </form>
+
+        </div>
+
+    </body>
+
+    </html>
     '''
 
 
-# Logout
+# Logout Page
 @app.route('/logout')
 def logout():
 
