@@ -37,6 +37,7 @@ def register():
     if request.method == 'POST':
 
         full_name = request.form['full_name']
+
         email = request.form['email']
 
         password = bcrypt.generate_password_hash(
@@ -48,7 +49,8 @@ def register():
         cursor = connection.cursor()
 
         # Check duplicate email
-       check_sql = "SELECT * FROM users WHERE email=?"
+        check_sql = "SELECT * FROM users WHERE email=?"
+
         cursor.execute(check_sql, (email,))
 
         existing_user = cursor.fetchone()
