@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Statistics</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .main-card{
+            width:800px;
+            background:white;
+            padding:40px;
+            border-radius:25px;
+            text-align:center;
+            animation:slideUp .8s ease;
+        }
+
+        .stat-card{
+            background:#f8f9fa;
+            border-radius:15px;
+            padding:20px;
+            margin:10px;
+        }
+
+        @keyframes slideUp{
+            from{
+                opacity:0;
+                transform:translateY(50px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card shadow">
+
+    <h1 class="mb-4">
+        📊 AI Budget System - Statistics Management
+    </h1>
+
+    <div class="row">
+
+        <div class="col-md-4">
+            <div class="stat-card shadow">
+                <h2>{{ total_users }}</h2>
+                <p>Registered Users</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card shadow">
+                <h2>500+</h2>
+                <p>Budget Calculations</p>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="stat-card shadow">
+                <h2>20%</h2>
+                <p>Average Savings</p>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <a href="/dashboard">
+        <button class="btn btn-warning">
+            Back Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>

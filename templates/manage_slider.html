@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Slider | AI Budget System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card{
+            max-width: 800px;
+            width:100%;
+            background:white;
+            padding: 35px;
+            border-radius: 30px;
+            text-align:center;
+            animation:slideUp .8s ease;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.3);
+        }
+
+        @keyframes slideUp{
+            from{opacity:0;transform:translateY(50px);}
+            to{opacity:1;transform:translateY(0);}
+        }
+
+        h1 {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #6c757d;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        /* Slider Preview Section */
+        .slider-preview {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .slider-item {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s;
+            border-left: 4px solid #764ba2;
+        }
+
+        .slider-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .slider-img {
+            width: 80px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 10px;
+            background: #e9ecef;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+        }
+
+        .slider-info {
+            flex: 1;
+            text-align: left;
+        }
+
+        .slider-title {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .slider-url {
+            font-size: 11px;
+            color: #999;
+            word-break: break-all;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 12px;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-edit:hover {
+            background: #e0a800;
+        }
+
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #c82333;
+        }
+
+        /* Add Form Section */
+        .add-section {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #0c4a6e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-control {
+            border-radius: 50px;
+            padding: 10px 18px;
+            border: 2px solid #bae6fd;
+            width: 100%;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+        }
+
+        .btn-add {
+            background: linear-gradient(95deg, #0ea5e9, #3b82f6);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+
+        .btn-add:hover {
+            background: linear-gradient(95deg, #0284c7, #2563eb);
+            transform: translateY(-1px);
+        }
+
+        .btn-back {
+            background: linear-gradient(95deg, #6d28d9, #9333ea);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .btn-back:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            color: white;
+        }
+
+        /* Success Message */
+        .alert-success {
+            border-radius: 50px;
+            animation: fadeInOut 3s ease forwards;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateX(50px); }
+            15% { opacity: 1; transform: translateX(0); }
+            85% { opacity: 1; transform: translateX(0); }
+            100% { opacity: 0; transform: translateX(50px); display: none; }
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 450px;
+            width: 90%;
+            border-radius: 25px;
+            padding: 25px;
+            animation: slideUp 0.3s ease;
+        }
+
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            font-size: 11px;
+            color: #aaa;
+        }
+
+        @media (max-width: 576px) {
+            .card {
+                padding: 20px;
+            }
+            .slider-item {
+                flex-direction: column;
+                text-align: center;
+            }
+            .slider-info {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card shadow">
+    <h1><i class="fas fa-images"></i> AI Budget System - Slider Management</h1>
+    <div class="subtitle">Add and Update Slider Images Here</div>
+
+    <!-- Success Message -->
+    <div id="successMessage" style="display: none;" class="alert-success">
+        <i class="fas fa-check-circle"></i> <span id="successText">Success!</span>
+    </div>
+
+    <!-- Slider List Section -->
+    <div class="slider-preview">
+        <h5 class="mb-3 text-start"><i class="fas fa-list"></i> Current Sliders</h5>
+        <div id="sliderList">
+            <!-- Slider 1 -->
+            <div class="slider-item" data-id="1">
+                <div class="slider-img">
+                    <i class="fas fa-chart-line fa-2x" style="color: #667eea;"></i>
+                </div>
+                <div class="slider-info">
+                    <div class="slider-title">🎯 Smart Budget Planning</div>
+                    <div class="slider-url">/static/slider/budget-planning.jpg</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editSlider(1)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteSlider(1)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+
+            <!-- Slider 2 -->
+            <div class="slider-item" data-id="2">
+                <div class="slider-img">
+                    <i class="fas fa-robot fa-2x" style="color: #764ba2;"></i>
+                </div>
+                <div class="slider-info">
+                    <div class="slider-title">🤖 AI Powered Insights</div>
+                    <div class="slider-url">/static/slider/ai-insights.jpg</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editSlider(2)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteSlider(2)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+
+            <!-- Slider 3 -->
+            <div class="slider-item" data-id="3">
+                <div class="slider-img">
+                    <i class="fas fa-piggy-bank fa-2x" style="color: #10b981;"></i>
+                </div>
+                <div class="slider-info">
+                    <div class="slider-title">💰 Save Money Effortlessly</div>
+                    <div class="slider-url">/static/slider/savings-goals.jpg</div>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editSlider(3)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteSlider(3)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add New Slider Section -->
+    <div class="add-section">
+        <h5 class="mb-3 text-start"><i class="fas fa-plus-circle"></i> Add New Slider</h5>
+        <form id="addSliderForm">
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-heading"></i> Slider Title
+                </label>
+                <input type="text" 
+                       name="title" 
+                       id="sliderTitle"
+                       class="form-control" 
+                       placeholder="e.g., Weekly Budget Report" 
+                       required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-link"></i> Image URL / Path
+                </label>
+                <input type="text" 
+                       name="image_url" 
+                       id="sliderUrl"
+                       class="form-control" 
+                       placeholder="e.g., /static/slider/image.jpg or https://example.com/img.jpg">
+                <small class="text-muted mt-1 d-block">Enter image URL or local path</small>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-palette"></i> Icon Class (Optional)
+                </label>
+                <input type="text" 
+                       name="icon" 
+                       id="sliderIcon"
+                       class="form-control" 
+                       placeholder="e.g., fa-chart-line, fa-robot, fa-piggy-bank">
+                <small class="text-muted mt-1 d-block">Font Awesome icons: fa-chart-line, fa-robot, fa-piggy-bank, fa-bell, fa-calendar</small>
+            </div>
+            <button type="submit" class="btn-add">
+                <i class="fas fa-save"></i> Add Slider
+            </button>
+        </form>
+    </div>
+
+    <!-- Back Dashboard Button -->
+    <a href="/dashboard">
+        <button class="btn-back">
+            <i class="fas fa-arrow-left"></i> Back Dashboard
+        </button>
+    </a>
+
+    <!-- Footer -->
+    <div class="footer">
+        <i class="fas fa-robot"></i> AI Budget System • Manage Slider Images Easily
+    </div>
+</div>
+
+<!-- Edit Modal -->
+<div id="editModal" class="modal-overlay">
+    <div class="modal-content">
+        <h5 class="mb-3"><i class="fas fa-edit"></i> Edit Slider</h5>
+        <input type="hidden" id="editId">
+        <div class="mb-3">
+            <label>Slider Title</label>
+            <input type="text" id="editTitle" class="form-control" style="border-radius: 50px;">
+        </div>
+        <div class="mb-3">
+            <label>Image URL / Path</label>
+            <input type="text" id="editUrl" class="form-control" style="border-radius: 50px;">
+        </div>
+        <div class="mb-3">
+            <label>Icon Class</label>
+            <input type="text" id="editIcon" class="form-control" style="border-radius: 50px;" placeholder="fa-chart-line">
+        </div>
+        <div class="d-flex gap-2">
+            <button onclick="saveEdit()" class="btn-add" style="flex:1;">Save Changes</button>
+            <button onclick="closeModal()" class="btn btn-secondary" style="border-radius: 50px; padding: 10px 20px;">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let nextId = 4;
+
+    function showSuccessMessage(message) {
+        const successDiv = document.getElementById('successMessage');
+        const successText = document.getElementById('successText');
+        successText.innerText = message;
+        successDiv.style.display = 'block';
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 3000);
+    }
+
+    function addSlider(title, imageUrl, iconClass) {
+        const sliderList = document.getElementById('sliderList');
+        const sliderDiv = document.createElement('div');
+        sliderDiv.className = 'slider-item';
+        sliderDiv.setAttribute('data-id', nextId);
+
+        let iconHtml = '';
+        let iconColor = '#667eea';
+        if (iconClass && iconClass.trim() !== '') {
+            iconHtml = `<i class="fas ${iconClass} fa-2x" style="color: ${iconColor};"></i>`;
+        } else {
+            iconHtml = `<i class="fas fa-image fa-2x" style="color: ${iconColor};"></i>`;
+        }
+
+        let displayUrl = imageUrl ? imageUrl : '/static/slider/default.jpg';
+        if (displayUrl.length > 40) {
+            displayUrl = displayUrl.substring(0, 37) + '...';
+        }
+
+        let emoji = '';
+        if (title.includes('Budget') || title.includes('Plan')) emoji = '🎯';
+        else if (title.includes('AI') || title.includes('Smart')) emoji = '🤖';
+        else if (title.includes('Save') || title.includes('Money')) emoji = '💰';
+        else if (title.includes('Report')) emoji = '📊';
+        else if (title.includes('Tip')) emoji = '💡';
+        else emoji = '✨';
+
+        sliderDiv.innerHTML = `
+            <div class="slider-img">
+                ${iconHtml}
+            </div>
+            <div class="slider-info">
+                <div class="slider-title">${emoji} ${escapeHtml(title)}</div>
+                <div class="slider-url">${escapeHtml(displayUrl)}</div>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-edit btn-sm" onclick="editSlider(${nextId})"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn-delete btn-sm" onclick="deleteSlider(${nextId})"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        `;
+
+        sliderList.appendChild(sliderDiv);
+        nextId++;
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    function deleteSlider(id) {
+        if (confirm('Are you sure you want to delete this slider?')) {
+            const slider = document.querySelector(`.slider-item[data-id="${id}"]`);
+            if (slider) {
+                slider.remove();
+                showSuccessMessage('Slider deleted successfully!');
+            }
+        }
+    }
+
+    function editSlider(id) {
+        const slider = document.querySelector(`.slider-item[data-id="${id}"]`);
+        if (slider) {
+            const titleSpan = slider.querySelector('.slider-title');
+            const urlSpan = slider.querySelector('.slider-url');
+            const iconI = slider.querySelector('.slider-img i');
+            
+            let currentTitle = titleSpan.innerText;
+            currentTitle = currentTitle.replace(/^[^\w]+/, '');
+            
+            let currentUrl = urlSpan.innerText;
+            let currentIcon = '';
+            if (iconI && iconI.className) {
+                const classes = iconI.className.split(' ');
+                const faClass = classes.find(c => c.startsWith('fa-') && c !== 'fas');
+                if (faClass) currentIcon = faClass;
+            }
+            
+            document.getElementById('editId').value = id;
+            document.getElementById('editTitle').value = currentTitle.trim();
+            document.getElementById('editUrl').value = currentUrl;
+            document.getElementById('editIcon').value = currentIcon;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+    }
+
+    function saveEdit() {
+        const id = document.getElementById('editId').value;
+        const newTitle = document.getElementById('editTitle').value.trim();
+        const newUrl = document.getElementById('editUrl').value.trim();
+        const newIcon = document.getElementById('editIcon').value.trim();
+        
+        if (!newTitle) {
+            alert('Please enter a slider title');
+            return;
+        }
+        
+        const slider = document.querySelector(`.slider-item[data-id="${id}"]`);
+        if (slider) {
+            const titleSpan = slider.querySelector('.slider-title');
+            const urlSpan = slider.querySelector('.slider-url');
+            const iconDiv = slider.querySelector('.slider-img');
+            
+            let emoji = '';
+            if (newTitle.includes('Budget') || newTitle.includes('Plan')) emoji = '🎯';
+            else if (newTitle.includes('AI') || newTitle.includes('Smart')) emoji = '🤖';
+            else if (newTitle.includes('Save') || newTitle.includes('Money')) emoji = '💰';
+            else if (newTitle.includes('Report')) emoji = '📊';
+            else if (newTitle.includes('Tip')) emoji = '💡';
+            else emoji = '✨';
+            
+            titleSpan.innerHTML = `${emoji} ${escapeHtml(newTitle)}`;
+            
+            let displayUrl = newUrl;
+            if (displayUrl.length > 40) {
+                displayUrl = displayUrl.substring(0, 37) + '...';
+            }
+            urlSpan.innerText = displayUrl;
+            
+            if (newIcon) {
+                iconDiv.innerHTML = `<i class="fas ${newIcon} fa-2x" style="color: #667eea;"></i>`;
+            } else {
+                iconDiv.innerHTML = `<i class="fas fa-image fa-2x" style="color: #667eea;"></i>`;
+            }
+            
+            showSuccessMessage('Slider updated successfully!');
+        }
+        
+        closeModal();
+    }
+
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    document.getElementById('addSliderForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const title = document.getElementById('sliderTitle').value.trim();
+        const imageUrl = document.getElementById('sliderUrl').value.trim();
+        const icon = document.getElementById('sliderIcon').value.trim();
+        
+        if (!title) {
+            alert('Please enter a slider title');
+            return;
+        }
+        
+        addSlider(title, imageUrl, icon);
+        
+        document.getElementById('sliderTitle').value = '';
+        document.getElementById('sliderUrl').value = '';
+        document.getElementById('sliderIcon').value = '';
+        
+        showSuccessMessage('Slider added successfully!');
+    });
+
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>

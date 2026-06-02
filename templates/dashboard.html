@@ -17,7 +17,7 @@
         }
 
         .card{
-            width:400px;
+            width:450px;
             border-radius:20px;
             padding:30px;
             text-align:center;
@@ -40,18 +40,54 @@
         {{ session['user'] }}
 
     </h3>
+
     <h5 class="text-success mb-4">
 
-    Role : {{ session['role'] }}
+        Role : {{ session['role'] }}
 
-</h5>
+    </h5>
+
+    <a href="/budget">
+        <button class="btn btn-success w-100 mb-2">
+            AI Budget System
+        </button>
+    </a>
+
+    <a href="/manage-home">
+        <button class="btn btn-primary w-100 mb-2">
+            Manage Home Page
+        </button>
+    </a>
+
+    <a href="/manage-features">
+        <button class="btn btn-info w-100 mb-2">
+            Manage Features
+        </button>
+    </a>
+
+    <a href="/manage-statistics">
+        <button class="btn btn-warning w-100 mb-2">
+            Manage Statistics
+        </button>
+    </a>
+
+    
+
+    <a href="/manage-slider">
+        <button class="btn btn-dark w-100 mb-3">
+            Manage Slider
+        </button>
+    </a>
+    <a href="/manage-about">
+        <button class="btn btn-secondary w-100 mb-2">
+            Manage About Us
+        </button>
+    </a>
 
     <a href="/logout">
-
         <button class="btn btn-danger w-100">
             Logout
         </button>
-
     </a>
 
 </div>

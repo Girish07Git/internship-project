@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage About Us</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            background: linear-gradient(135deg,#667eea,#764ba2);
+            min-height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .main-card{
+            width:800px;
+            background:white;
+            padding:40px;
+            border-radius:25px;
+            text-align:center;
+            animation:slideUp .8s ease;
+        }
+
+        @keyframes slideUp{
+            from{
+                opacity:0;
+                transform:translateY(50px);
+            }
+            to{
+                opacity:1;
+                transform:translateY(0);
+            }
+        }
+
+        .about-box{
+            background:#f8f9fa;
+            padding:20px;
+            border-radius:15px;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card shadow">
+
+    <h1>ℹ️ AI Budget System - About Us</h1>
+
+    <div class="about-box">
+
+        <div class="about-box">
+
+    <h4>About Website</h4>
+
+    <p>
+        AI Budget Recommendation System is a web-based platform designed
+        to help users manage their personal finances efficiently.
+    </p>
+
+    <p>
+        Users can register, login securely, calculate their monthly budget,
+        track expenses and monitor savings through an easy-to-use dashboard.
+    </p>
+
+    <p>
+        The website provides smart budget recommendations based on income
+        and expenses, helping users improve their financial planning.
+    </p>
+
+    <p>
+        The platform includes user authentication, budget analysis,
+        statistics management and content management features.
+    </p>
+
+</div>
+<div class="row mt-4">
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow">
+            <h3>Secure Login</h3>
+            <p>User Authentication</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow">
+            <h3>Budget Analysis</h3>
+            <p>Income & Expense Tracking</p>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card p-3 shadow">
+            <h3>Smart Savings</h3>
+            <p>AI Budget Recommendations</p>
+        </div>
+    </div>
+
+</div>
+
+    <br>
+
+    <a href="/dashboard">
+        <button class="btn btn-primary">
+            Back Dashboard
+        </button>
+    </a>
+
+</div>
+
+</body>
+</html>

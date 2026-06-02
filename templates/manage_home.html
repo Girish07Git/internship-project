@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Home Page | AI Budget System</title>
+    
+    <!-- Bootstrap 5 (easy to use) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 50px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .card {
+            max-width: 650px;
+            margin: auto;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s ease;
+            border: none;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        h1 {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            font-weight: 800;
+            font-size: 32px;
+        }
+        
+        .subtitle {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        /* Content Display Box */
+        .content-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 18px;
+            padding: 22px;
+            margin: 25px 0;
+            border-left: 5px solid #764ba2;
+            transition: all 0.3s;
+        }
+        
+        .content-box:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .content-box h5 {
+            color: #4a2c6d;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        #currentText {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        
+        /* Form Styling */
+        .form-label {
+            font-weight: 700;
+            color: #4a2c6d;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        textarea {
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+            padding: 12px 15px;
+            width: 100%;
+            font-size: 14px;
+            transition: all 0.3s;
+            resize: vertical;
+        }
+        
+        textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+            box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+        }
+        
+        /* Buttons */
+        .btn-update {
+            background: linear-gradient(95deg, #10b981, #34d399);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .btn-update:hover {
+            background: linear-gradient(95deg, #059669, #10b981);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .btn-dashboard {
+            background: linear-gradient(95deg, #6d28d9, #9333ea);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .btn-dashboard:hover {
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(109, 40, 217, 0.3);
+        }
+        
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 15px;
+        }
+        
+        .btn-reset:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+        
+        /* Success Toast Message */
+        .toast-success {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+            font-weight: 500;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Character Counter */
+        .char-counter {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+            text-align: right;
+        }
+        
+        .char-counter.warning {
+            color: #f59e0b;
+        }
+        
+        .char-counter.danger {
+            color: #ef4444;
+        }
+        
+        /* Preview Section */
+        .preview-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            border: 1px dashed #764ba2;
+        }
+        
+        .preview-box small {
+            color: #764ba2;
+            font-weight: 600;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+            font-size: 11px;
+            color: #aaa;
+        }
+        
+        @media (max-width: 576px) {
+            .card {
+                padding: 20px !important;
+            }
+            .d-flex {
+                flex-direction: column;
+                gap: 10px !important;
+            }
+            .btn-update, .btn-dashboard, .btn-reset {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card p-4">
+    <div class="text-center">
+        <h1><i class="fas fa-home"></i> Manage Home Page</h1>
+        <div class="subtitle">Update your homepage content easily</div>
+    </div>
+    
+    <!-- Current Content Display -->
+    <div class="content-box">
+        <h5><i class="fas fa-eye"></i> Current Homepage Content:</h5>
+        <p id="currentText">Welcome to your budget manager! Track expenses and save money.</p>
+    </div>
+    
+    <!-- Live Preview Section -->
+    <div class="preview-box">
+        <small><i class="fas fa-eye"></i> Live Preview:</small>
+        <p id="livePreview" class="mt-2 mb-0" style="color: #333; font-size: 14px;">Welcome to your budget manager! Track expenses and save money.</p>
+    </div>
+    
+    <!-- Edit Form -->
+    <form id="updateForm">
+        <div class="mb-3">
+            <label class="form-label">
+                <i class="fas fa-edit"></i> Edit Homepage Content:
+            </label>
+            <textarea id="pageContent" rows="5" class="form-control" 
+                      placeholder="Type your homepage message here..." 
+                      maxlength="500">Welcome to your budget manager! Track expenses and save money.</textarea>
+            <div class="char-counter" id="charCounter">
+                <i class="fas fa-keyboard"></i> <span id="charCount">52</span> / 500 characters
+            </div>
+        </div>
+        
+        <div class="d-flex gap-3 justify-content-center flex-wrap">
+            <button type="submit" class="btn-update">
+                <i class="fas fa-save"></i> Update Now
+            </button>
+            <button type="button" class="btn-reset" id="resetBtn">
+                <i class="fas fa-undo"></i> Reset to Default
+            </button>
+            <a href="/dashboard" class="btn-dashboard">
+                <i class="fas fa-arrow-left"></i> Back Dashboard
+            </a>
+        </div>
+    </form>
+    
+    <!-- Saved History Section -->
+    <div class="mt-4">
+        <small class="text-muted">
+            <i class="fas fa-history"></i> Last saved: <span id="lastSaved">Not saved yet</span>
+        </small>
+    </div>
+    
+    <div class="footer">
+        <i class="fas fa-robot"></i> AI Budget System • Manage Your Homepage Content
+    </div>
+</div>
+
+<!-- Success Toast -->
+<div id="successToast" class="toast-success">
+    <i class="fas fa-check-circle"></i>
+    <span id="toastMessage">Homepage updated successfully!</span>
+</div>
+
+<!-- Simple JavaScript for smooth management -->
+<script>
+    // Get elements
+    const form = document.getElementById('updateForm');
+    const textarea = document.getElementById('pageContent');
+    const currentText = document.getElementById('currentText');
+    const livePreview = document.getElementById('livePreview');
+    const charCountSpan = document.getElementById('charCount');
+    const lastSavedSpan = document.getElementById('lastSaved');
+    const successToast = document.getElementById('successToast');
+    const toastMessage = document.getElementById('toastMessage');
+    const resetBtn = document.getElementById('resetBtn');
+    
+    // Default content
+    const defaultContent = "Welcome to your budget manager! Track expenses and save money.";
+    
+    // Load saved content from localStorage
+    function loadSavedContent() {
+        const savedContent = localStorage.getItem('homepageContent');
+        if (savedContent) {
+            textarea.value = savedContent;
+            currentText.innerHTML = savedContent;
+            livePreview.innerHTML = savedContent;
+            updateCharCount();
+            const savedTime = localStorage.getItem('homepageLastSaved');
+            if (savedTime) {
+                lastSavedSpan.innerHTML = savedTime;
+            }
+        } else {
+            // Set default
+            textarea.value = defaultContent;
+            currentText.innerHTML = defaultContent;
+            livePreview.innerHTML = defaultContent;
+            updateCharCount();
+        }
+    }
+    
+    // Update character count
+    function updateCharCount() {
+        const length = textarea.value.length;
+        charCountSpan.innerHTML = length;
+        const counterDiv = document.querySelector('.char-counter');
+        
+        if (length > 450) {
+            counterDiv.classList.add('danger');
+            counterDiv.classList.remove('warning');
+        } else if (length > 400) {
+            counterDiv.classList.add('warning');
+            counterDiv.classList.remove('danger');
+        } else {
+            counterDiv.classList.remove('warning', 'danger');
+        }
+    }
+    
+    // Show toast message
+    function showToast(message) {
+        toastMessage.innerHTML = message;
+        successToast.style.display = 'flex';
+        setTimeout(() => {
+            successToast.style.display = 'none';
+        }, 3000);
+    }
+    
+    // Get current date and time
+    function getCurrentDateTime() {
+        const now = new Date();
+        return now.toLocaleString();
+    }
+    
+    // Update all displays
+    function updateHomepage(content) {
+        currentText.innerHTML = content;
+        livePreview.innerHTML = content;
+        updateCharCount();
+        
+        // Save to localStorage
+        localStorage.setItem('homepageContent', content);
+        const saveTime = getCurrentDateTime();
+        localStorage.setItem('homepageLastSaved', saveTime);
+        lastSavedSpan.innerHTML = saveTime;
+        
+        showToast('✅ Homepage updated successfully!');
+    }
+    
+    // Live preview on typing
+    textarea.addEventListener('input', function() {
+        const newContent = textarea.value;
+        livePreview.innerHTML = newContent;
+        updateCharCount();
+    });
+    
+    // Form submit - Update homepage
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const newContent = textarea.value.trim();
+        
+        if (newContent === "") {
+            showToast('⚠️ Please enter some content!');
+            return;
+        }
+        
+        updateHomepage(newContent);
+    });
+    
+    // Reset to default content
+    resetBtn.addEventListener('click', function() {
+        if (confirm('Reset to default homepage content?')) {
+            textarea.value = defaultContent;
+            livePreview.innerHTML = defaultContent;
+            updateCharCount();
+            updateHomepage(defaultContent);
+        }
+    });
+    
+    // Load saved content on page load
+    loadSavedContent();
+    
+    // Also save when user clicks outside (auto-save)
+    textarea.addEventListener('blur', function() {
+        const newContent = textarea.value.trim();
+        if (newContent !== "" && newContent !== currentText.innerHTML) {
+            updateHomepage(newContent);
+        }
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚙️ Manage Features | AI Budget System</title>
+    
+    <!-- Bootstrap 5 CSS (simple and clean) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 40px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Main Card Animation */
+        .main-card {
+            max-width: 750px;
+            margin: auto;
+            background: white;
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: slideUp 0.6s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Title Style */
+        .title {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .title h1 {
+            font-size: 32px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+        
+        .title p {
+            color: #6c757d;
+            font-size: 14px;
+        }
+        
+        /* Feature List Box */
+        .feature-list {
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .feature-item {
+            background: white;
+            border-radius: 15px;
+            padding: 12px 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+            border-left: 4px solid #764ba2;
+        }
+        
+        .feature-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .feature-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .feature-name i {
+            color: #764ba2;
+            font-size: 18px;
+            width: 25px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-sm {
+            padding: 5px 12px;
+            font-size: 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-edit {
+            background: #ffc107;
+            color: #333;
+        }
+        
+        .btn-edit:hover {
+            background: #e0a800;
+            color: #333;
+        }
+        
+        .btn-delete {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn-delete:hover {
+            background: #c82333;
+            color: white;
+        }
+        
+        /* Add Feature Form */
+        .add-section {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 25px 0;
+        }
+        
+        .form-label {
+            font-weight: 600;
+            color: #92400e;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-control {
+            border-radius: 50px;
+            padding: 10px 18px;
+            border: 2px solid #fde68a;
+            width: 100%;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+        }
+        
+        .btn-add {
+            background: linear-gradient(95deg, #10b981, #34d399);
+            border: none;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        
+        .btn-add:hover {
+            background: linear-gradient(95deg, #059669, #10b981);
+            transform: translateY(-1px);
+        }
+        
+        /* Dashboard Button */
+        .btn-dashboard {
+            background: linear-gradient(95deg, #6d28d9, #9333ea);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 50px;
+            font-weight: 600;
+            color: white;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        
+        .btn-dashboard:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(95deg, #7c3aed, #a855f7);
+            color: white;
+        }
+        
+        /* Empty Message */
+        .empty-message {
+            text-align: center;
+            padding: 30px;
+            color: #999;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            font-size: 12px;
+            color: #aaa;
+        }
+        
+        /* Success message animation */
+        .alert-success {
+            border-radius: 50px;
+            animation: fadeInOut 3s ease forwards;
+        }
+        
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(-10px); }
+            15% { opacity: 1; transform: translateY(0); }
+            85% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); display: none; }
+        }
+        
+        @media (max-width: 576px) {
+            .main-card {
+                padding: 20px;
+            }
+            .feature-item {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+            .action-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-card">
+    
+    <!-- Header -->
+    <div class="title">
+        <h1><i class="fas fa-sliders-h"></i> Manage Features</h1>
+        <p>Add, Edit and Delete AI Budget System Features</p>
+    </div>
+    
+    <!-- Success message (shows after adding feature) -->
+    <div id="successMessage" style="display: none;" class="alert alert-success text-center mb-3">
+        <i class="fas fa-check-circle"></i> Feature added successfully!
+    </div>
+    
+    <!-- Current Features List -->
+    <div class="feature-list" id="featureList">
+        <h5 class="mb-3"><i class="fas fa-list"></i> Current Features</h5>
+        
+        <div id="featuresContainer">
+            <!-- Feature 1 -->
+            <div class="feature-item" data-id="1">
+                <div class="feature-name">
+                    <i class="fas fa-chart-line"></i>
+                    <span>📊 Budget Tracker</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editFeature(1)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteFeature(1)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <!-- Feature 2 -->
+            <div class="feature-item" data-id="2">
+                <div class="feature-name">
+                    <i class="fas fa-robot"></i>
+                    <span>🤖 AI Savings Tips</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editFeature(2)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteFeature(2)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <!-- Feature 3 -->
+            <div class="feature-item" data-id="3">
+                <div class="feature-name">
+                    <i class="fas fa-piggy-bank"></i>
+                    <span>💰 Savings Goals</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editFeature(3)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteFeature(3)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <!-- Feature 4 -->
+            <div class="feature-item" data-id="4">
+                <div class="feature-name">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>📈 Expense Reports</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editFeature(4)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteFeature(4)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+            
+            <!-- Feature 5 -->
+            <div class="feature-item" data-id="5">
+                <div class="feature-name">
+                    <i class="fas fa-bell"></i>
+                    <span>🔔 Monthly Reminders</span>
+                </div>
+                <div class="action-buttons">
+                    <button class="btn-edit btn-sm" onclick="editFeature(5)"><i class="fas fa-edit"></i> Edit</button>
+                    <button class="btn-delete btn-sm" onclick="deleteFeature(5)"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add New Feature Section -->
+    <div class="add-section">
+        <h5 class="mb-3"><i class="fas fa-plus-circle"></i> Add New Feature</h5>
+        <form method="POST" id="addFeatureForm">
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-tag"></i> Feature Name
+                </label>
+                <input type="text" 
+                       name="feature_name" 
+                       id="featureName"
+                       class="form-control" 
+                       placeholder="e.g., Weekly Budget Report" 
+                       required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">
+                    <i class="fas fa-palette"></i> Icon Class (Optional)
+                </label>
+                <input type="text" 
+                       name="icon" 
+                       id="featureIcon"
+                       class="form-control" 
+                       placeholder="e.g., fa-chart-line or fa-calendar">
+                <small class="text-muted mt-1 d-block">Font Awesome icons like: fa-chart-line, fa-robot, fa-piggy-bank, fa-bell</small>
+            </div>
+            <button type="submit" class="btn-add">
+                <i class="fas fa-save"></i> Add Feature
+            </button>
+        </form>
+    </div>
+    
+    <!-- Edit Modal (for editing feature) -->
+    <div id="editModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5); z-index: 1000; align-items: center; justify-content: center;">
+        <div style="background: white; max-width: 400px; margin: auto; border-radius: 20px; padding: 25px;">
+            <h5 class="mb-3"><i class="fas fa-edit"></i> Edit Feature</h5>
+            <input type="hidden" id="editId">
+            <div class="mb-3">
+                <label>Feature Name</label>
+                <input type="text" id="editName" class="form-control" style="border-radius: 50px;">
+            </div>
+            <div class="mb-3">
+                <label>Icon Class</label>
+                <input type="text" id="editIcon" class="form-control" style="border-radius: 50px;">
+            </div>
+            <div class="d-flex gap-2">
+                <button onclick="saveEdit()" class="btn-add" style="flex:1;">Save</button>
+                <button onclick="closeModal()" class="btn btn-secondary" style="border-radius: 50px;">Cancel</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Dashboard Button -->
+    <div class="text-center">
+        <a href="/dashboard" class="btn-dashboard">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+    
+    <!-- Footer -->
+    <div class="footer">
+        <i class="fas fa-robot"></i> AI Budget System • Manage Features Easily
+    </div>
+</div>
+
+<script>
+    // Get features container
+    const featuresContainer = document.getElementById('featuresContainer');
+    let nextId = 6;
+    
+    // Function to show success message
+    function showSuccess(message) {
+        const successDiv = document.getElementById('successMessage');
+        successDiv.style.display = 'block';
+        setTimeout(() => {
+            successDiv.style.display = 'none';
+        }, 3000);
+    }
+    
+    // Function to add new feature
+    function addFeature(name, iconClass) {
+        const featureDiv = document.createElement('div');
+        featureDiv.className = 'feature-item';
+        featureDiv.setAttribute('data-id', nextId);
+        
+        let iconHtml = '';
+        if (iconClass && iconClass.trim() !== '') {
+            iconHtml = `<i class="fas ${iconClass}"></i>`;
+        } else {
+            iconHtml = `<i class="fas fa-star"></i>`;
+        }
+        
+        let emoji = '';
+        if (name.includes('Budget')) emoji = '💰';
+        else if (name.includes('Report')) emoji = '📊';
+        else if (name.includes('Tip')) emoji = '💡';
+        else if (name.includes('Alert')) emoji = '⚠️';
+        else if (name.includes('Goal')) emoji = '🎯';
+        else emoji = '✨';
+        
+        featureDiv.innerHTML = `
+            <div class="feature-name">
+                ${iconHtml}
+                <span>${emoji} ${escapeHtml(name)}</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-edit btn-sm" onclick="editFeature(${nextId})"><i class="fas fa-edit"></i> Edit</button>
+                <button class="btn-delete btn-sm" onclick="deleteFeature(${nextId})"><i class="fas fa-trash"></i> Delete</button>
+            </div>
+        `;
+        
+        featuresContainer.appendChild(featureDiv);
+        nextId++;
+    }
+    
+    // Helper to escape HTML
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+    
+    // Delete feature
+    function deleteFeature(id) {
+        if (confirm('Are you sure you want to delete this feature?')) {
+            const feature = document.querySelector(`.feature-item[data-id="${id}"]`);
+            if (feature) {
+                feature.remove();
+                showSuccess('Feature deleted successfully!');
+            }
+        }
+    }
+    
+    // Edit feature - show modal
+    function editFeature(id) {
+        const feature = document.querySelector(`.feature-item[data-id="${id}"]`);
+        if (feature) {
+            const nameSpan = feature.querySelector('.feature-name span');
+            const iconI = feature.querySelector('.feature-name i');
+            
+            let currentName = nameSpan.innerText;
+            currentName = currentName.replace(/^[^\w]+/, ''); // remove emoji at start
+            
+            let currentIcon = '';
+            if (iconI && iconI.className) {
+                const classes = iconI.className.split(' ');
+                const faClass = classes.find(c => c.startsWith('fa-') && c !== 'fas');
+                if (faClass) currentIcon = faClass;
+            }
+            
+            document.getElementById('editId').value = id;
+            document.getElementById('editName').value = currentName.trim();
+            document.getElementById('editIcon').value = currentIcon;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+    }
+    
+    // Save edited feature
+    function saveEdit() {
+        const id = document.getElementById('editId').value;
+        const newName = document.getElementById('editName').value.trim();
+        const newIcon = document.getElementById('editIcon').value.trim();
+        
+        if (!newName) {
+            alert('Please enter a feature name');
+            return;
+        }
+        
+        const feature = document.querySelector(`.feature-item[data-id="${id}"]`);
+        if (feature) {
+            const nameSpan = feature.querySelector('.feature-name span');
+            const iconI = feature.querySelector('.feature-name i');
+            
+            let emoji = '';
+            if (newName.includes('Budget')) emoji = '💰';
+            else if (newName.includes('Report')) emoji = '📊';
+            else if (newName.includes('Tip') || newName.includes('Savings')) emoji = '💡';
+            else if (newName.includes('Alert') || newName.includes('Reminder')) emoji = '⚠️';
+            else if (newName.includes('Goal')) emoji = '🎯';
+            else emoji = '✨';
+            
+            nameSpan.innerHTML = `${emoji} ${escapeHtml(newName)}`;
+            
+            if (newIcon) {
+                iconI.className = `fas ${newIcon}`;
+            } else {
+                iconI.className = 'fas fa-star';
+            }
+            
+            showSuccess('Feature updated successfully!');
+        }
+        
+        closeModal();
+    }
+    
+    function closeModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+    
+    // Handle form submission
+    document.getElementById('addFeatureForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const featureName = document.getElementById('featureName').value.trim();
+        const iconClass = document.getElementById('featureIcon').value.trim();
+        
+        if (!featureName) {
+            alert('Please enter a feature name');
+            return;
+        }
+        
+        addFeature(featureName, iconClass);
+        
+        // Clear form
+        document.getElementById('featureName').value = '';
+        document.getElementById('featureIcon').value = '';
+        
+        showSuccess('Feature added successfully!');
+    });
+    
+    // Close modal when clicking outside
+    document.getElementById('editModal').addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeModal();
+        }
+    });
+</script>
+
+</body>
+</html>

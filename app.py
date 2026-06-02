@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS users(
 connection.commit()
 @app.route('/')
 def home():
-    return redirect('/register')
+    return render_template('home.html')
 
 
 # Registration Page
@@ -142,6 +142,94 @@ WHERE email=?
         return redirect('/login')
 
     return render_template('forgot_password.html')
+@app.route('/budget')
+def budget():
+
+    if 'user' in session:
+        return render_template('budget.html')
+
+    return redirect('/login')
+
+
+@app.route('/budget-result', methods=['POST'])
+def budget_result():
+
+    income = float(request.form['income'])
+    rent = float(request.form['rent'])
+    food = float(request.form['food'])
+    transport = float(request.form['transport'])
+    shopping = float(request.form['shopping'])
+
+    total_expense = rent + food + transport + shopping
+
+    savings = income - total_expense
+
+    if savings < 0:
+        advice = "Your expenses are higher than income."
+    elif savings < income * 0.2:
+        advice = "Try to save at least 20% of your income."
+    else:
+        advice = "Excellent savings habit."
+
+    return render_template(
+        'budget_result.html',
+        income=income,
+        expense=total_expense,
+        savings=savings,
+        advice=advice
+    )
+@app.route('/manage-home')
+def manage_home():
+
+    if 'user' in session:
+        return render_template('manage_home.html')
+
+    return redirect('/login')
+
+
+@app.route('/manage-features', methods=['GET', 'POST'])
+def manage_features():
+
+    if request.method == 'POST':
+
+        feature_name = request.form['feature_name']
+        icon = request.form['icon']
+
+        return f"Feature Added Successfully : {feature_name}"
+
+    return render_template('manage_features.html')
+
+
+@app.route('/manage-statistics')
+def manage_statistics():
+
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT COUNT(*) FROM users")
+
+    total_users = cursor.fetchone()[0]
+
+    return render_template(
+        'manage_statistics.html',
+        total_users=total_users
+    )
+
+@app.route('/manage-about')
+def manage_about():
+
+    if 'user' in session:
+        return render_template('manage_about.html')
+
+    return redirect('/login')
+
+
+@app.route('/manage-slider')
+def manage_slider():
+
+    if 'user' in session:
+        return render_template('manage_slider.html')
+
+    return redirect('/login')
 # Logout
 @app.route('/logout')
 
