@@ -24,6 +24,38 @@ CREATE TABLE IF NOT EXISTS users(
 """)
 
 connection.commit()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS our_story(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    content TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS core_values(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    value TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS programs(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    description TEXT
+)
+""")
+
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS team_members(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT,
+    role TEXT,
+    image_url TEXT
+)
+""")
+
+connection.commit()
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -230,7 +262,6 @@ def manage_slider():
         return render_template('manage_slider.html')
 
     return redirect('/login')
-# Logout
 @app.route('/logout')
 
 def logout():
